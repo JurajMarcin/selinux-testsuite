@@ -2,6 +2,7 @@
 ######### Test filesystem permissions policy module ##########
 #
 # Note: The name-based type_transition rules are in test_filesystem_name_trans.te
+# Note: The name prefix/suffix-based type_transition rules are in test_filesystem_prefix_suffix_trans.te
 #
 attribute filesystemdomain;
 kernel_setsched(filesystemdomain)

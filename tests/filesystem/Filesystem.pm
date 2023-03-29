@@ -41,7 +41,18 @@ sub check_config {
         $tst_count += 1;
     }
 
-    return ( $tst_count, $watch, $name_trans, $type_trans );
+    $prefix_suffix_trans = 0;
+    if ( not $vfat_enabled ) {
+        if (    $mod_pol_vers >= 23
+            and $pol_vers >= 35
+            and $max_kernel_policy >= 35 )
+        {
+            $prefix_suffix_trans = 1;
+            $tst_count += 6;
+        }
+    }
+
+    return ( $tst_count, $watch, $name_trans, $type_trans, $prefix_suffix_trans );
 }
 
 # Stop the udisks(8) daemon, then restart on exit.

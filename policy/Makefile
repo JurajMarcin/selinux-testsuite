@@ -145,6 +145,9 @@ ifeq ($(shell grep -q filesystem $(POLDEV)/include/support/all_perms.spt && echo
 TARGETS += test_filesystem.te
 ifeq ($(shell [ $(MOD_POL_VERS) -ge 11 -a $(POL_VERS) -ge 25 ] && echo true),true)
 TARGETS += test_filesystem_name_trans.te
+ifeq ($(shell [ $(MOD_POL_VERS) -ge 23 -a $(POL_VERS) -ge 35 -a $(MAX_KERNEL_POLICY) -ge 35 ] && echo true),true)
+TARGETS += test_filesystem_prefix_suffix_trans.te
+endif
 ifeq ($(shell grep -q all_file_perms.*watch $(POLDEV)/include/support/all_perms.spt && echo true),true)
 TARGETS+= test_filesystem_notify.te
 endif

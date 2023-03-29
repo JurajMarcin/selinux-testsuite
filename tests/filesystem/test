@@ -136,7 +136,7 @@ BEGIN {
     }
 
     # Check if watch and/or named type_transition rules configured
-    ( $addit, $test_watch, $test_name_trans, $test_type_trans ) =
+    ( $addit, $test_watch, $test_name_trans, $test_type_trans, $test_prefix_suffix_trans ) =
       check_config( $basedir, "$basedir/fanotify_fs", $nfs_enabled,
         $vfat_enabled );
 
@@ -283,6 +283,50 @@ if ($test_name_trans) {
 "Creating 'name_trans_test_file2' and checking context changed via name-based type_transition rule\n";
     $result = system(
 "runcon -t test_filesystem_t $basedir/create_file -f $basedir/mntpoint/mp1/name_trans_test_file2 -e test_filesystem_filenametranscon2_t $v"
+    );
+    ok( $result eq 0 );
+}
+
+if ($test_prefix_suffix_trans) {
+    print
+"Creating 'name_trans_test_file_prefix' and checking context changed via name prefix/suffix-based type_transition rule (exact match)\n";
+    $result = system(
+"runcon -t test_filesystem_t $basedir/create_file -f $private_path/mp1/name_trans_test_file_prefix -e test_filesystem_prefixsuffixtranscon1_t $v"
+    );
+    ok( $result eq 0 );
+
+    print
+"Creating 'name_trans_test_file_prefix1' and checking context changed via name prefix/suffix-based type_transition rule (prefix match)\n";
+    $result = system(
+"runcon -t test_filesystem_t $basedir/create_file -f $private_path/mp1/name_trans_test_file_prefix1 -e test_filesystem_prefixsuffixtranscon2_t $v"
+    );
+    ok( $result eq 0 );
+
+    print
+"Creating 'name_trans_test_file_prefix_longer' and checking context changed via name prefix/suffix-based type_transition rule (longer prefix match)\n";
+    $result = system(
+"runcon -t test_filesystem_t $basedir/create_file -f $private_path/mp1/name_trans_test_file_prefix_longer -e test_filesystem_prefixsuffixtranscon3_t $v"
+    );
+    ok( $result eq 0 );
+
+    print
+"Creating 'name_trans_test_file_suffix' and checking context changed via name prefix/suffix-based type_transition rule (exact match)\n";
+    $result = system(
+"runcon -t test_filesystem_t $basedir/create_file -f $private_path/mp1/name_trans_test_file_suffix -e test_filesystem_prefixsuffixtranscon4_t $v"
+    );
+    ok( $result eq 0 );
+
+    print
+"Creating '1name_trans_test_file_suffix' and checking context changed via name prefix/suffix-based type_transition rule (suffix match)\n";
+    $result = system(
+"runcon -t test_filesystem_t $basedir/create_file -f $private_path/mp1/1name_trans_test_file_suffix -e test_filesystem_prefixsuffixtranscon5_t $v"
+    );
+    ok( $result eq 0 );
+
+    print
+"Creating 'longer_name_trans_test_file_suffix' and checking context changed via name prefix/suffix-based type_transition rule (longer suffix match)\n";
+    $result = system(
+"runcon -t test_filesystem_t $basedir/create_file -f $private_path/mp1/longer_name_trans_test_file_suffix -e test_filesystem_prefixsuffixtranscon6_t $v"
     );
     ok( $result eq 0 );
 }
