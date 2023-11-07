@@ -43,9 +43,9 @@ sub check_config {
 
     $prefix_suffix_trans = 0;
     if ( not $vfat_enabled ) {
-        if (    $mod_pol_vers >= 23
-            and $pol_vers >= 35
-            and $max_kernel_policy >= 35 )
+        if (    $mod_pol_vers >= 22
+            and $pol_vers >= 34
+            and $max_kernel_policy >= 34 )
         {
             $prefix_suffix_trans = 1;
             $tst_count += 6;
